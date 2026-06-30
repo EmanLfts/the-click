@@ -7,15 +7,6 @@ export type Community = {
   inviteCode?: string;
   expiresAt?: string;
   ownerId: string;
-  bannerImage?: string;
-};
-
-export type AvatarStyle = {
-  skin: string;
-  hair: string;
-  shirt: string;
-  accent: string;
-  accessory: string;
 };
 
 export type UserProfile = {
@@ -23,13 +14,6 @@ export type UserProfile = {
   name: string;
   interests: string[];
   joinedCommunityIds: string[];
-  avatarStyle?: AvatarStyle;
-  username?: string;
-  contact?: string;
-  birthdate?: string;
-  bio?: string;
-  mood?: string;
-  bannerColor?: string;
 };
 
 export type SocialPost = {
@@ -50,18 +34,6 @@ export type SocialPost = {
 };
 
 const STORAGE_KEY = "the-click-social-state";
-
-export const defaultAvatarStyle: AvatarStyle = {
-  skin: "#f2c8a2",
-  hair: "#2d1a12",
-  shirt: "#ff6b6b",
-  accent: "#ffd166",
-  accessory: "sparkles",
-};
-
-export const defaultProfileTheme = {
-  bannerColor: "#ff8fab",
-};
 
 type SocialState = {
   communities: Community[];
@@ -192,8 +164,7 @@ export function joinCommunity(userId: string, inviteCode: string) {
   };
 
   const updatedProfiles = state.profiles.map((item) => (item.userId === userId ? updatedProfile : item));
-  const updatedCommunities = state.communities.map((item) => (item.id === community.id ? { ...item, inviteCode: undefined, expiresAt: undefined } : item));
-  writeState({ ...state, profiles: updatedProfiles, communities: updatedCommunities });
+  writeState({ ...state, profiles: updatedProfiles });
   return community;
 }
 
